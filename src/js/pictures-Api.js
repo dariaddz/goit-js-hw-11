@@ -1,6 +1,6 @@
 import axios from 'axios';
 const API_KEY = '24739812-632d84cc6c0c90167994a5978';
-const BASE_URL = `https://pixabay.com/api`;
+const BASE_URL = `https://pixabay.com/api/`;
 
 export default class PicturesApiService {
   constructor() {
