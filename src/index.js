@@ -38,6 +38,7 @@ console.log('picturesApiService before build  ', picturesApiService);
 // -----------находит картинки и запускает фун-ю добавления галереи------------
 async function onPicturesFetchAndMarkup() {
   await picturesApiService.fetchPictures().then(appendPicturesMarkup);
+  // .then(()=>if (page > 1) { smoothScroll});
 }
 
 // ------------------добавляет найденное в разметку галереи-----------
@@ -48,7 +49,9 @@ function appendPicturesMarkup(dataReceived) {
   Notify.success(`Hooray! We found ${dataReceived.totalHits} images`);
   refs.gallery.insertAdjacentHTML('beforeend', galleryTmplt(dataReceived.hits));
   bigPicture();
-  smoothScroll();
+  if (picturesApiService.page > 2) {
+    smoothScroll();
+  }
   onSearchFinishCheck(dataReceived);
 }
 
