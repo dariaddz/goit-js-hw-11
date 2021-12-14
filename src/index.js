@@ -47,8 +47,8 @@ function appendPicturesMarkup(dataReceived) {
 
   Notify.success(`Hooray! We found ${dataReceived.totalHits} images`);
   refs.gallery.insertAdjacentHTML('beforeend', galleryTmplt(dataReceived.hits));
-  //   bigPicture();
-  //   smoothScroll();
+  bigPicture();
+  smoothScroll();
   onSearchFinishCheck(dataReceived);
 }
 
@@ -81,4 +81,20 @@ function onSearchFinishCheck(dataReceived) {
     hideLoadMoreBtn();
     return Notify.warning("That's it! You've reached the end of search results");
   }
+}
+
+function bigPicture() {
+  var lightbox = new SimpleLightbox('.gallery a');
+  lightbox.refresh();
+}
+
+function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
