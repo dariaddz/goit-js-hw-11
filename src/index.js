@@ -29,7 +29,6 @@ function onFormSubmit(e) {
   clearContainer();
 
   onPicturesFetchAndMarkup();
-  showLoadMoreBtn();
 }
 
 const picturesApiService = new PicturesApiService();
@@ -44,14 +43,26 @@ async function onPicturesFetchAndMarkup() {
 // ------------------добавляет найденное в разметку галереи-----------
 //--------проверяет нашел/не нашел/конец страницы--------
 function appendPicturesMarkup(dataReceived) {
-  OnInputCheck(dataReceived);
+  if (dataReceived.totalHits === 0) {
+    hideLoadMoreBtn();
+    clearContainer();
+    return Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again',
+    );
+  }
 
   Notify.success(`Hooray! We found ${dataReceived.totalHits} images`);
+
   refs.gallery.insertAdjacentHTML('beforeend', galleryTmplt(dataReceived.hits));
+
+  showLoadMoreBtn();
+
   bigPicture();
+
   if (picturesApiService.page > 2) {
     smoothScroll();
   }
+
   onSearchFinishCheck(dataReceived);
 }
 
@@ -67,14 +78,14 @@ function hideLoadMoreBtn() {
   refs.loadMoreBtn.classList.add('hidden');
 }
 
-function OnInputCheck(dataReceived) {
-  if (dataReceived.totalHits === 0) {
-    clearContainer();
-    return Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again',
-    );
-  }
-}
+// function OnInputCheck(dataReceived) {
+//   if (dataReceived.totalHits === 0) {
+//     clearContainer();
+//     return Notify.failure(
+//       'Sorry, there are no images matching your search query. Please try again',
+//     );
+//   }
+// }
 
 function onSearchFinishCheck(dataReceived) {
   if (
