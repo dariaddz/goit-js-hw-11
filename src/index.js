@@ -34,6 +34,13 @@ function onFormSubmit(e) {
 const picturesApiService = new PicturesApiService();
 console.log('picturesApiService before build  ', picturesApiService);
 
+// const observer = new IntersectionObserver(onPicturesFetchAndMarkup, {
+//   root: null,
+//   rootMargin: '0px',
+//   threshold: 0.5,
+// });
+// observer.observe(refs.loadMoreBtn);
+
 // -----------находит картинки и запускает фун-ю добавления галереи------------
 async function onPicturesFetchAndMarkup() {
   await picturesApiService.fetchPictures().then(appendPicturesMarkup);
